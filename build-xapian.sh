@@ -1,9 +1,9 @@
 #!/bin/bash
 THREADS=${THREADS:-2}
-
+TAG=${TAG:-v1.4.19}
 git clone https://github.com/xapian/xapian
 cd xapian
-git checkout v1.4.16
+git checkout $TAG -b $TAG 
 ./bootstrap xapian-core
 ./configure CXXFLAGS=-O0 --disable-backend-honey --disable-backend-inmemory --disable-backend-remote
 make -j$THREADS

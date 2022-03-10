@@ -40,3 +40,8 @@ You can also have a look at the [.travis.yml](.travis.yml) file for a complete b
 ## Running tests
 
 `npm run test`
+
+## Acknowledgement
+
+This project is based on the [work](https://github.com/runbox/runbox-searchindex) of [Peter Salomonsen](https://github.com/petersalomonsen) and [Tadeusz Sośnierz](https://github.com/tadzik) licensed under the terms of GNU General Public License.
+We reuse the xapian loader logic to deploy a wasm module that can read the indexes in the Xapian format extracted from ZIM files under `X/fultext/xapian` and `X/title/xapian`.
