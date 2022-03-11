@@ -10,11 +10,17 @@ This project depends on [Xapian](https://github.com/xapian/xapian) and that you 
 
 In order to build the web assembly binaries you will have to set the `XAPIAN` environment variable to
 the location of the `xapian_core` folder of your Xapian emscripten build.
-See [build-xapian.sh](build-xapian.sh) for more information.
+See [build-xapian.sh](build-xapian.sh) for more information. This script will download and install xapian using emscripten in the root directory of this project.
 
 You may then build it using:
 ```
-XAPIAN=xapian_core_location npm run build`
+./build-xapian.sh
+npm run build
+```
+
+Or if you already have Xapian compiled using Emscripten:
+```
+XAPIAN=xapian-core_location npm run build
 ```
 
 ## Running tests
