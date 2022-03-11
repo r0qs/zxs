@@ -14,23 +14,18 @@ if (!process.env.XAPIAN) {
   console.error("Environment variable XAPIAN must be set to the location of xapian_core");
 } else {
   try {
-    console.log('Building Runbox Xapian webassembly library');
+    console.log('Building Xapian webassembly library');
     if (!existsSync('dist')) {
       mkdirSync('dist');
     }
-    execSync(`em++ -Oz -s DISABLE_EXCEPTION_CATCHING=0 -s USE_ZLIB=1 ` +
-      `-s "EXTRA_EXPORTED_RUNTIME_METHODS=['FS','cwrap','stringToUTF8','UTF8ToString','getValue']" ` +
-      `-std=c++11 -s DEMANGLE_SUPPORT=1 -s ALLOW_MEMORY_GROWTH=1 -s ` +
+    execSync(`em++ -Oz -s DISABLE_EXCEPTION_CATCHING=0 -s USE_ZLIB=1 -s FORCE_FILESYSTEM=1 ` +
+      `-s "EXPORTED_RUNTIME_METHODS=['FS','cwrap','stringToUTF8','UTF8ToString','getValue']" ` +
+      `-std=c++11 -s DEMANGLE_SUPPORT=1 -s ALLOW_MEMORY_GROWTH=1 -s -s ASSERTIONS=1 ` +
       `-I$XAPIAN/include -I$XAPIAN -I$XAPIAN/common rmmxapianapi.cc $XAPIAN/.libs/libxapian-1.5.a ` +
-      `--preload-file ./X ` + // inside the X are the xapian db to be loaded (per page)
-      `-o dist/xapianasm.js -lidbfs.js`, { stdio: 'inherit' });
-    console.log('Successful build of xapianasm.wasm, xapianasm.js and pre-load xapianasm.data');
+      `--preload-file ./X ` + // inside the X there must be the xapian db to be loaded (per page)
+      `-o dist/xapianasm.js -lidbfs.js -lnodefs.js`, { stdio: 'inherit' });
+    console.log('Successful build of xapianasm.wasm, xapianasm.js and pre-loading indexes');
   } catch (e) {
     console.error('Compile failed');
   }
 }
-
-// ASSERTIONS=1 
-// "--closure 0|1|2"
-// pre-load db: `-preload-file ./xapian-db ` +
-// for browser: `-lworkerfs.js --proxy-to-worker -lworkerfs.js`

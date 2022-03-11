@@ -5,7 +5,8 @@
         "build": "node compilermmxapianapi.js --xapiandir=xapian/xapian-core && tsc",
         "test": "mocha-typescript-watch -p tsconfig.json build/test/test.js",
         "test-no-watch": "tsc -p tsconfig.json && mocha build/test/test.js",
-        "preparelib": "cp -r build/xapian/* dist/ && node preparelibrary.js"
+        "preparelib": "cp -r build/xapian/* dist/ && node preparelibrary.js",
+        "make-demo": "cp -r build/xapian/rmmxapianapi* dist/xapianasm* demo/"
     },
     "devDependencies": {
         "@testdeck/mocha": "0.2.0",
