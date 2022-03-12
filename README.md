@@ -8,9 +8,11 @@ We reuse the xapian loader logic to deploy a wasm module that can read the index
 ## How to build
 This project depends on [Xapian](https://github.com/xapian/xapian) and that you have built it using [Emscripten](https://emscripten.org/) as described [here](https://github.com/xapian/xapian/blob/master/xapian-core/emscripten/README.md).
 
-In order to build the web assembly binaries you will have to set the `XAPIAN` environment variable to
-the location of the `xapian_core` folder of your Xapian emscripten build.
-See [build-xapian.sh](build-xapian.sh) for more information. This script will download and install xapian using emscripten in the root directory of this project.
+To build the web assembly binaries you will have to set the `XAPIAN` environment variable to
+the location of the `xapian-core` folder of your Xapian emscripten build.
+
+See [build-xapian.sh](build-xapian.sh) for more information.
+The script will download and install xapian using emscripten in the root directory of this project.
 
 You may then build it using:
 ```
