@@ -1,5 +1,5 @@
 {
-    "name": "@r0qs/zim-xapian-searchindex",
+    "name": "@r0qs/zxs",
     "version": "0.1.0",
     "scripts": {
         "build": "node compilermmxapianapi.js --xapiandir=xapian/xapian-core && tsc",
