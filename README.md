@@ -15,6 +15,7 @@ See [build-xapian.sh](build-xapian.sh) for more information. This script will do
 You may then build it using:
 ```
 ./build-xapian.sh
+npm install
 npm run build
 ```
 
