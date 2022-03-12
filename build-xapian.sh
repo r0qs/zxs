@@ -11,5 +11,4 @@ make -j$THREADS distclean
 cd xapian-core
 emconfigure ./configure CPPFLAGS='-DFLINTLOCK_USE_FLOCK' CXXFLAGS='-Oz -s USE_ZLIB=1 -fno-rtti' --disable-backend-honey --disable-backend-inmemory --disable-shared --disable-backend-remote
 emmake make -j$THREADS
-cp .libs/libxapian.a .libs/libxapian-1.5.a
 cd ../..
