@@ -1,8 +1,6 @@
 #!/bin/bash
 
 preload_dir=$(pwd)/X
-container_user=emscripten
-container_group=emscripten
 container_home=/home/emscripten/zxs
 XAPIAN=${container_home}/xapian/xapian-core
 
