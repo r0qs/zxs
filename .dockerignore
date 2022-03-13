@@ -1,0 +1,8 @@
+xapian
+emsdk
+X
+node_modules
+demo
+*tests
+**/.git
+package-lock.json

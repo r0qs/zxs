@@ -11,6 +11,8 @@
         "test-no-watch": "tsc -p tsconfig.json && mocha build/test/test.js",
         "preparelib": "cp -r build/xapian/* dist/ && node preparelibrary.js",
         "make-demo": "cp -r build/xapian/rmmxapianapi* dist/xapianasm* demo/",
+        "docker:build": "docker build -t zxs -f Dockerfile .",
+        "docker:genidx": "./docker-gen-index.sh"
     },
     "devDependencies": {
         "@testdeck/mocha": "0.2.0",
