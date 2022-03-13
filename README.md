@@ -23,7 +23,7 @@ npm run build
 
 Or if you already have Xapian compiled using Emscripten:
 ```
-XAPIAN=xapian-core_location npm run build
+XAPIAN=xapian_core_location npm run build
 ```
 
 ## Running tests
@@ -41,9 +41,8 @@ npm run test-no-watch
 ## Run Demo
 
 ```
-npm run build
+PRELOAD=./X npm run build
 npm run make-demo
 cd demo
 python3 -m http.server
 ```
-
