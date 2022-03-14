@@ -1,4 +1,5 @@
 // --------- BEGIN RUNBOX LICENSE ---------
+// TODO: Update license for BEEZIM !!
 // Copyright (C) 2016-2018 Runbox Solutions AS (runbox.com).
 // 
 // This file is part of Runbox 7.
@@ -113,11 +114,14 @@ export class XapianAPI {
 
     const hits = Module._queryIndex($queryString, $searchResults, offset, maxresults);
     // console.log(hits);
-    const results = new Array(hits);
+    const results = new Array();
     for (let n = 0; n < hits; n++) {
       const docid = Module.getValue($searchResults + (n * 4), 'i32');
       Module._getDocumentData(docid, $resultIdTerm);
-      results[n] = Module.UTF8ToString($resultIdTerm);
+      results.push({
+        docid: docid,
+        data: Module.UTF8ToString($resultIdTerm)
+      });
     }
     Module._free($searchResults);
     Module._free($queryString);
