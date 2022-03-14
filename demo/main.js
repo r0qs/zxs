@@ -6,22 +6,21 @@ var BeeZIMSearcher = function() {
 	this.initRan = false;
 	this.xapian = new XapianAPI();
 	this.maxResults = 20;
+	this.titleResults = 3;
 
 	this.init(this.fulltextIndex);
 }
 
 BeeZIMSearcher.prototype.init = function(index) {
 	var self = this;
-	console.log("Init");
 	addOnPostRun(function(){
 		self.xapian.initXapianIndexReadOnly(self.fulltextIndex);
-		console.log(self.xapian);
 		self.initRan = true;
 	});
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET","files.html"); // TODO: Should be special file in json format
+	xhr.open("GET","files.json");
 	xhr.onload = function() {
-		self.parseFiles(xhr.response);
+		self.files = JSON.parse(xhr.response);
 	};
 	xhr.send();
 }
@@ -38,22 +37,32 @@ BeeZIMSearcher.prototype.search = function(query) {
 	}
 	
 	let results = [];
-	let filesMatch = 0;
 	let queryLower = query.toLowerCase();
-	for(var i = 0; i < this.files.length; i++){
-		if (filesMatch >= 3)
-			break;
-		let curr = this.files[i];
-		if(curr.title.indexOf(queryLower) > -1) {
-			results.push({
-				query: query,
-				title: curr.title,
-				data: curr.url
-			});
-		}
-	}
-	this.xapian.queryXapianIndex(query,0,this.maxResults).forEach((r) => {
+
+	this.xapian.queryXapianIndex(query,0,this.maxResults-this.titleResults).forEach((r) => {
 		results.push(r);
 	});
+	let wantedTitleMatch = this.maxResults-results.length;
+	for (const [key, value] of Object.entries(this.files)){
+		if (wantedTitleMatch <= 0)
+			break;
+		let curr = this.files[i];
+		// console.log(key);
+		// console.log(value);
+		if(value.Metadata.Title.indexOf(queryLower) > -1) {
+			results.unshift({
+				query: query,
+				title: value.Metadata.Title,
+				data: key//value.Path
+			});
+			wantedTitleMatch--;
+		}
+	}
+
+	
+	for(var i = 0; i < this.files.length; i++){
+		
+	}
+	
 	return results;
 }
