@@ -5,15 +5,15 @@
         "xapiandir": "xapian/xapian-core"
     },
     "scripts": {
-        "compile": "node compilermmxapianapi.js",
+        "compile": "node compile-xapianapi.js",
         "build": "npm run compile && tsc",
         "test": "mocha-typescript-watch -p tsconfig.json build/test/test.js",
         "test-no-watch": "tsc -p tsconfig.json && mocha build/test/test.js",
         "preparelib": "cp -r build/xapian/* dist/ && node preparelibrary.js",
-        "make-demo": "cp -r build/xapian/rmm* dist/xapianasm* demo/",
+        "make-demo": "cp -r build/xapian/xapian* dist/xapianasm* demo/",
         "docker:build": "docker build -t zxs -f Dockerfile .",
         "docker:genidx": "./docker-gen-index.sh",
-        "clean": "rm -rf build/ dist/ demo/xapian* demo/rmm*"
+        "clean": "rm -rf build/ dist/ demo/xapian*"
     },
     "devDependencies": {
         "@testdeck/mocha": "0.2.0",

@@ -3,7 +3,7 @@ import { suite, test } from "@testdeck/mocha";
 import { existsSync, mkdirSync } from "fs";
 import { execSync } from "child_process";
 import { loadXapian } from "../xapian/xapian.loader";
-import { XapianAPI } from "../xapian/rmmxapianapi";
+import { XapianAPI } from "../xapian/xapianapi";
 
 // const XAPIANFSTYPE: string = "MEM";
 const XAPIANFSTYPE: string = "NODE";

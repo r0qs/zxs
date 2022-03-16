@@ -1,2 +1,2 @@
-export { XapianAPI, SearchParams } from './rmmxapianapi';
+export { XapianAPI } from './xapianapi';
 export { loadXapian } from './xapian.loader';
