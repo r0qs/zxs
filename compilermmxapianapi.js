@@ -27,9 +27,9 @@ try {
     `-s "EXPORTED_RUNTIME_METHODS=['FS','cwrap','stringToUTF8','UTF8ToString','getValue']" ` +
     `-std=c++11 -s DEMANGLE_SUPPORT=1 -s ALLOW_MEMORY_GROWTH=1 ` +
     `-I$XAPIAN/include -I$XAPIAN -I$XAPIAN/common rmmxapianapi.cc $XAPIAN/.libs/libxapian.a ` +
+    `--use-preload-plugins --pre-js ./pre.js ` +
     preloadCmd +
-    `-o dist/xapianasm.js -lidbfs.js -lnodefs.js`, { stdio: 'inherit' });
-
+    `-o dist/xapianasm.js -lidbfs.js`, { stdio: 'inherit' });
   if (process.env.PRELOAD) {
     preMsg = " and pre-loading indexes"
   }

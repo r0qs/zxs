@@ -3,18 +3,30 @@
 
 <head>
 	<meta charset="utf-8">
-	<script>var exports = {};</script>
-	<script src="main.js" type="text/javascript"></script>
-	<script src="rmmxapianapi.js" type="text/javascript"></script>
-	<script src="xapianasm.js" type="text/javascript"></script>
-	<script>var Searcher = new BeeZIMSearcher();</script>
 </head>
 
 <body>
-
 	<h1>Welcome to BeeZIM</h1>
-	
 
+	<script>var exports = {};</script>
+	<script src="rmmxapianapi.js" type="text/javascript"></script>
+	<script src="xapianasm.js" type="text/javascript"></script>
+	<script src="main.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		if (!window.indexedDB) {
+			console.log("Your browser doesn't support a stable version of IndexedDB. The embed search engine may not work properly.");
+		}
+
+		var Searcher
+		Module.onRuntimeInitialized = async function () {
+			// Pass the relative path of the index to be loaded into the IDBFS
+			Searcher = await BeeZIMSearcher.init("./X/fulltext/xapian");
+			if (Searcher) {
+				await Searcher.loadFiles();
+				console.log(Searcher.Search("beat"));
+			}
+		}
+	</script>
 </body>
 
 </html>
