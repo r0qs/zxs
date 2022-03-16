@@ -20,9 +20,9 @@
 		var Searcher
 		Module.onRuntimeInitialized = async function () {
 			// Pass the relative path of the index to be loaded into the IDBFS
-			Searcher = await BeeZIMSearcher.init("./X/fulltext/xapian");
+			Searcher = await BeeZIMSearcher.Init("./X/fulltext/xapian");
 			if (Searcher) {
-				await Searcher.loadFiles();
+				await Searcher.LoadFiles();
 				console.log(Searcher.Search("beat"));
 			}
 		}

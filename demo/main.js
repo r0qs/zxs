@@ -29,19 +29,21 @@ function asyncFetch(method, url, opts = {}) {
 }
 
 class BeeZIMSearcher {
-	articles = [];
-	initRan = false;
-	maxResults = 20;
-	titleResults = 3;
+	#articles = [];
+	#initRan = false;
+	#maxResults = 20;
+	#titleResults = 3;
+	#indexURL;
+	#xapian;
 
 	constructor(indexURL, xapianPath) {
-		this.indexUrl = indexURL;
-		this.xapian = new XapianAPI();
-		this.xapian.initXapianIndexReadOnly(xapianPath);
-		this.initRan = true;
+		this.#indexURL = indexURL;
+		this.#xapian = new XapianAPI();
+		this.#xapian.initXapianIndexReadOnly(xapianPath);
+		this.#initRan = true;
 	}
 
-	static init(indexURL) {
+	static Init(indexURL) {
 		// Note: /data is created and mounted on the pre.js included in the compiled code.
 		const xapianIDBFSPath = "/data/xapian";
 	
@@ -77,50 +79,49 @@ class BeeZIMSearcher {
 		});
 	}
 
-	async loadFiles() {
+	async LoadFiles() {
 		const files = await asyncFetch("GET", "files.json")
-		this.parseFiles(files);
+		this.#parseFiles(files);
 	}
 
-	parseFiles(filesResponse) {
+	#parseFiles(filesResponse) {
 		let files = JSON.parse(filesResponse);
 		for (const [key, value] of Object.entries(files)) {
 			if (key.startsWith("A/")) {
-				this.articles.push(value);
+				this.#articles.push(value);
 			}
 		}
 	}
 
 	GetRandomArticle() {
-		if (!this.initRan) {
-			return "You need to run 'init()' before searching!";
+		if (!this.#initRan) {
+			return "You need to run 'Init()' before searching!";
 		}
-		return this.articles[this.articles.length * Math.random() << 0];
+		return this.#articles[this.#articles.length * Math.random() << 0];
 	}
 
 	Search(query) {
-		if (!this.initRan) {
-			return "You need to run 'init()' before searching!";
+		if (!this.#initRan) {
+			return "You need to run 'Init()' before searching!";
 		}
 
 		let results = [];
 		let queryLower = query.toLowerCase();
 
-		this.xapian.queryXapianIndex(query, 0, this.maxResults - this.titleResults).forEach((r) => {
-			console.log(r)
+		this.#xapian.queryXapianIndex(query, 0, this.#maxResults - this.#titleResults).forEach((r) => {
 			results.push({
 				docid: r.docid,
 				data: r.data,
-				wordcount: parseInt(this.xapian.getStringValue(r.docid, 1)),
-				title: this.xapian.getStringValue(r.docid, 0)
+				wordcount: parseInt(this.#xapian.getStringValue(r.docid, 1)),
+				title: this.#xapian.getStringValue(r.docid, 0)
 			});
 		});
-		let wantedTitleMatch = this.maxResults - results.length;
+		let wantedTitleMatch = this.#maxResults - results.length;
 		let titleResults = [];
-		for (let i = 0; i < this.articles.length; i++) {
+		for (let i = 0; i < this.#articles.length; i++) {
 			if (wantedTitleMatch <= 0)
 				break;
-			let value = this.articles[i];
+			let value = this.#articles[i];
 			if (value.Metadata.Title.toLowerCase().indexOf(queryLower) > -1) {
 				titleResults.push({
 					query: query,
@@ -135,8 +136,8 @@ class BeeZIMSearcher {
 		});
 
 		// Top 3 results are from titleResults
-		if (titleResults.length > this.titleResults) {
-			return titleResults.slice(0, this.titleResults).concat(results, titleResults.slice(this.titleResults))
+		if (titleResults.length > this.#titleResults) {
+			return titleResults.slice(0, this.#titleResults).concat(results, titleResults.slice(this.#titleResults))
 		}
 
 		return titleResults.concat(results);
