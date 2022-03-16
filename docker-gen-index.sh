@@ -1,6 +1,17 @@
 #!/bin/bash
 
-preload_dir=$(pwd)/X
+default_preload_dir=$(pwd)/X
+
+function help(){
+	echo "Usage : $0 [preload-directory] (default: ${default_preload_dir})"
+}
+
+if [ "$1" == "-h" ]; then
+  help
+	exit 0
+fi
+
+preload_dir=${1:-${default_preload_dir}}
 container_home=/home/emscripten/zxs
 XAPIAN=${container_home}/xapian/xapian-core
 
