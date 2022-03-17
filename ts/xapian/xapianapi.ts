@@ -119,8 +119,6 @@ export class XapianAPI {
     ]);
   public setStringValue: (docid: number, slot: number, val: string) => void =
     Module.cwrap("setStringValue", null, ["number", "number", "string"]);
-  public changeDocumentsFolder: (unique_term: string, folder: string) => void =
-    Module.cwrap("changeDocumentsFolder", null, ["string", "string"]);
   public addTermToDocument: (idterm: string, termname: string) => void =
     Module.cwrap("addTermToDocument", null, ["string", "string"]);
   public removeTermFromDocument: (idterm: string, termname: string) => void =
