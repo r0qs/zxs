@@ -4,10 +4,10 @@ Zim Xapian Searchindex
 ZXS enables the search of [ZIM](https://wiki.openzim.org/wiki/OpenZIM) indexed data in your browser using the Xapian database that is [already embedded in the Zim files]((https://wiki.openzim.org/wiki/Search_indexes)) without interacting with a server.
 It is a WebAssembly library and javascript search tool that can read the indexes in the Xapian format extracted from ZIM files under `X/fulltext/xapian` and `X/title/xapian`.
 
-ZXS is based on an Open Source Search Engine Library called [Xapian](https://xapian.org/), released under the [GPL v2+](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) and written in C++.
+This project is based on an Open Source Search Engine Library called [Xapian](https://xapian.org/), released under the [GPL v2+](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) and written in C++.
 We compiled it for WebAssembly using the [Emscripten](https://emscripten.org/) compiler.
 
-ZXS is mainly used by [Beezim](https://github.com/r0qs/beezim), a set of tools to mirror websites on [Swarm](https://www.ethswarm.org/).
+It is mainly used by [Beezim](https://github.com/r0qs/beezim), a set of tools to mirror websites on [Swarm](https://www.ethswarm.org/).
 However, ZXS can also be used to allow users to search content without an internet connection,
 embedding the javascript search tool and the WebAssembly engine directly in the ZIM files.
 
