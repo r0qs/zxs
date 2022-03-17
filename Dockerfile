@@ -80,5 +80,5 @@ RUN  chown -R emscripten:emscripten /home/emscripten/zxs
 USER emscripten
 WORKDIR /home/emscripten/zxs
 
-RUN echo "-- Installing ZIM Xapian indexer" \
+RUN echo "-- Installing ZIM Xapian Searchindex" \
     && npm install
