@@ -102,7 +102,7 @@ PRELOAD=$(pwd)/demo/X npm run docker:genasm
 The `demo/X`, `dist` and `build` directories are mounted in the docker container.
 The generated webassembly code and bindings will be placed in the `dist` directory, and are ready to use.
 
-You can now pack it together with your website or build try our demo, by running:
+You can now pack it together with your website or build our demo, by running:
 ```
 npm run make-demo
 cd demo
