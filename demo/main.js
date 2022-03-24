@@ -46,7 +46,7 @@ class BeeZIMSearcher {
 	static Init(indexURL) {
 		// Note: /data is created and mounted on the pre.js included in the compiled code.
 		const xapianIDBFSPath = "/data/xapian";
-	
+
 		return new Promise(async function (resolve, reject) {
 			try {
 				const opts = {
@@ -143,7 +143,7 @@ class BeeZIMSearcher {
 		return titleResults.concat(results);
 	}
 
-	GetTextContent(url) {
+	async GetTextContent(url) {
 		const htmlContent = await asyncFetch("GET", url);
 		let tmp = document.createElement("DIV");
 		tmp.innerHTML = htmlContent;
@@ -153,7 +153,7 @@ class BeeZIMSearcher {
 			let cStyle = c.querySelector("style");
 			let out = c.innerText || c.textContent || "";
 			if (cStyle != null)
-				out = out.replace(cStyle.innerText,"");
+				out = out.replace(cStyle.innerText, "");
 			str += out;
 		});
 		return str;

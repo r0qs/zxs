@@ -8,6 +8,13 @@
 <body>
 	<h1>Welcome to BeeZIM</h1>
 
+	<div>
+		<input type="text" placeholder="Search " id="searchInput">
+		<button type="button" onclick="search();">Search</button>
+		<div id="queryInfo"></div>
+		<ol class="list-group" id="searchresult"></ol>
+	</div>
+
 	<script>var exports = {};</script>
 	<script src="xapianapi.js" type="text/javascript"></script>
 	<script src="xapianasm.js" type="text/javascript"></script>
@@ -18,12 +25,46 @@
 		}
 
 		var Searcher
+		Module.preRun = function () {
+			console.log("Running preloader...")
+			FS.mkdir("/data");
+			FS.mount(IDBFS, {}, "/data");
+			// sync from IDBFS to MEMFS
+			FS.syncfs(true, function (err) {
+				if (err) {
+					console.error(err);
+				}
+			});
+			FS.chdir("/data");
+		}
+
 		Module.onRuntimeInitialized = async function () {
 			// Pass the relative path of the index to be loaded into the IDBFS
 			Searcher = await BeeZIMSearcher.Init("./X/fulltext/xapian");
+			await Searcher.LoadFiles();
+		}
+
+		function search() {
+			searchresult.innerHTML = "";
 			if (Searcher) {
-				await Searcher.LoadFiles();
-				console.log(Searcher.Search("beat"));
+				let query = document.getElementById("searchInput").value;
+				let searchresult = document.getElementById("searchresult");
+
+				let queryInfo = document.getElementById("queryInfo");
+				queryInfo.innerHTML = `<h4>Showing 20 best results for term: ${query} </h4>`;
+
+				let result = Searcher.Search(query);
+				for (let i = 0; i < result.length; i++) {
+					let resultText = "<li class='list-group-item'><b>Article title:</b> '" + result[i].title + "' <b>Relative URL:</b> '" + result[i].data + "' ";
+
+					if (result[i].wordcount) {
+						resultText += new Intl.NumberFormat().format(result[i].wordcount) + " words.";
+					} else {
+						resultText += "<b>title match</b>";
+					}
+					resultText += "<br></li>";
+					searchresult.innerHTML += resultText;
+				}
 			}
 		}
 	</script>

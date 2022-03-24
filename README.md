@@ -116,11 +116,6 @@ Run:
 npm run test
 ```
 
-Or:
-```
-npm run test-no-watch
-```
-
 ## Acknowledgments
 
 This project is based on the [work](https://github.com/runbox/runbox-searchindex) of [Peter Salomonsen](https://github.com/petersalomonsen) and [Tadeusz Sośnierz](https://github.com/tadzik) licensed under the terms of GNU General Public License.
