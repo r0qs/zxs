@@ -10,11 +10,13 @@
     "lib": ["es2017", "dom"],
     "noImplicitUseStrict": true,
     "typeRoots": [
-      "node_modules/@types"
+      "./node_modules/@types"
     ]
   },
-  "files": [    
-    "ts/xapian/index.ts",
-    "ts/test/test.ts"
-  ]  
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "ts/**/*.ts"
+  ]
 }
